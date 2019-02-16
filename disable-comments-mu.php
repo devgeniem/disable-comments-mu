@@ -1,14 +1,14 @@
 <?php
-/*
-Plugin Name: Disable Comments (Must Use version)
-Plugin URI: https://github.com/solarissmoke/disable-comments-mu
-Description: Disables all WordPress comment functionality on the entire network.
-Version: 1.1.2
-Author: Samir Shah
-Author URI: http://rayofsolaris.net/
-License: GPL2
-GitHub Plugin URI: https://github.com/solarissmoke/disable-comments-mu
-*/
+/**
+ * Plugin Name: Disable Comments (Must Use version)
+ * Plugin URI: https://github.com/devgeniem/disable-comments-mu
+ * Description: Disables all WordPress comment functionality on the entire network.
+ * Version: 1.1.2
+ * Author: Jaakko Lehtonen
+ * Author URI: https://www.geniem.fi/
+ * License: GPL-2.0
+ * GitHub Plugin URI: https://github.com/devgeniem/disable-comments-mu
+ */
 
 if( !defined( 'ABSPATH' ) ) {
 	exit;
@@ -66,21 +66,6 @@ class Disable_Comments_MU {
 			// Remove feed link from header
 			add_filter( 'feed_links_show_comments_feed', '__return_false' );
 		}
-	}
-
-	function check_comment_template() {
-		if( is_singular() ) {
-			// Kill the comments template. This will deal with themes that don't check comment stati properly!
-			add_filter( 'comments_template', array( $this, 'dummy_comments_template' ), 20 );
-			// Remove comment-reply script for themes that include it indiscriminately
-			wp_deregister_script( 'comment-reply' );
-			// Remove feed action
-			remove_action( 'wp_head', 'feed_links_extra', 3 );
-		}
-	}
-
-	function dummy_comments_template() {
-		return dirname( __FILE__ ) . '/disable-comments-mu/comments-template.php';
 	}
 
 	function filter_wp_headers( $headers ) {
